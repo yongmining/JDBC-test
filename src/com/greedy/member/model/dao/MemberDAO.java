@@ -2,40 +2,19 @@ package com.greedy.member.model.dao;
 
 import static com.greedy.common.JDBCTemplate.close;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
-import java.util.Properties;
 
 import com.greedy.member.model.dto.MemberDTO;
 
 public class MemberDAO {
 
-	private Properties prop;
-
-	public MemberDAO() {
-		this.prop = new Properties();
-
-		try {
-			prop.loadFromXML(new FileInputStream("mapper/member-query.xml"));
-		} catch (InvalidPropertiesFormatException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public int insertNewMember(Connection con, MemberDTO member) {
+	public List<MemberDTO> insertNewMember(SqlSession sqlSession) {
 
 		String query = prop.getProperty("insertMember");
 
